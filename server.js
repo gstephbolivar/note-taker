@@ -1,7 +1,7 @@
 //  Require Dependencies
 const express = require("express");
 const path = require("path");
-
+const fs = require("fs");
 // Create an instance of express
 const app = express();
 
@@ -12,26 +12,17 @@ const PORT = process.env.PORT || 8080;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// New Notes
-const newNote = [
-  {
-    title: "Note Title",
-    text: "Note Text",
-  },
-];
+// Require routes file
+require("./routes/routes")(app);
 
-// View Routes
-app.get("/notes", (req, res) => {
-  res.sendFile(path.join(__dirname, "/public/notes.html"));
-});
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/public/index.html"));
-});
+// // New Notes
+// const newNote = [
+//   {
+//     title: "Note Title",
+//     text: "Note Text",
+//   },
+// ];
 
-// API Routes
-app.get("/api/notes", (req, res) => {
-  return res.json(newNote);
-});
 
 // Listen on the PORT
 app.listen(PORT, () => {
