@@ -11,21 +11,27 @@ module.exports = (app) => {
       res.json(notes);
     });
 
-    // app.post("/api/notes", (req, res) => {
+    app.post("/api/notes", (req, res) => {
+      const newNote = req.body;
+      notes.push(newNote);
+      updatedDb();
+    });
 
-    // })
     // View Routes
     app.get("/notes", (req, res) => {
       res.sendFile(path.join(__dirname, "../public/notes.html"));
     });
+
     app.get("*", (req, res) => {
       res.sendFile(path.join(__dirname, "../public/index.html"));
     });
+
+    // Function to update db.json file whenever a note is added or deleted
+    function updatedDb() {
+      fs.writeFile("db/db.json", "utf8", (err, data) => {
+        if (err) throw err;
+        return true;
+      });
+    }
   });
 };
-
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../public/index.html"));
-//   });
-
-// };
