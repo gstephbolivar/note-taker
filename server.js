@@ -11,17 +11,10 @@ const PORT = process.env.PORT || 8080;
 // Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "public")));
 
 // Require routes file
 require("./routes/routes")(app);
-
-// // New Notes
-// const newNote = [
-//   {
-//     title: "Note Title",
-//     text: "Note Text",
-//   },
-// ];
 
 
 // Listen on the PORT
