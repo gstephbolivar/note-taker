@@ -9,18 +9,31 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 
 // Middleware
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// New Notes
+const newNote = [
+  {
+    title: "Note Title",
+    text: "Note Text",
+  },
+];
 
 // View Routes
 app.get("/notes", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/notes.html"));
+  res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/index.html"));
+  res.sendFile(path.join(__dirname, "/public/index.html"));
+});
+
+// API Routes
+app.get("/api/notes", (req, res) => {
+  return res.json(newNote);
 });
 
 // Listen on the PORT
-app.listen(PORT, () =>{
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
