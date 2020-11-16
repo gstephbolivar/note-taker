@@ -14,8 +14,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 // Require routes file
-require("./routes/routes")(app);
-
+require("./routes/APIroutes")(app);
+require("./routes/viewRoutes")(app);
 
 // Listen on the PORT
 app.listen(PORT, () => {
