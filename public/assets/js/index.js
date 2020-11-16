@@ -56,10 +56,9 @@ const handleNoteSave = function () {
     text: $noteText.val(),
   };
 
-  saveNote(newNote).then(() => {
+  saveNote(newNote);
     getAndRenderNotes();
     renderActiveNote();
-  });
 };
 
 // Delete the clicked note
@@ -69,14 +68,13 @@ const handleNoteDelete = function (event) {
 
   const note = $(this).parent(".list-group-item").data();
 
-  if (activeNote.id === note.id) {
+  if (activeNote.id === note) {
     activeNote = {};
   }
 
-  deleteNote(note.id).then(() => {
+  deleteNote(note)
     getAndRenderNotes();
     renderActiveNote();
-  });
 };
 
 // Sets the activeNote and displays it
