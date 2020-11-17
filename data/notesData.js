@@ -1,18 +1,18 @@
 const fs = require("fs");
 
-const db = "db/db.json";
+const db = require("../db/db.json");
 
 // Function to write and save notes
-const writeNotes = (data) => {
-  fs.writeFileSync(db, JSON.stringify(data));
+const writeNotes = (userInput) => {
+  fs.writeFileSync(db, JSON.stringify(userInput));
 };
 
 // Function to read notes
 const readNotes = () => {
-  const data = fs.readFile(db, "utf8");
+  const data = fs.readFileSync(db, "utf8");
 
-  let notes = JSON.parse(data);
+  const notes = JSON.parse(data);
   return notes;
 };
 
-module.exports = { writeNotes , readNotes };
+module.exports = { writeNotes, readNotes };
