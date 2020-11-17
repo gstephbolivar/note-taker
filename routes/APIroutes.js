@@ -1,36 +1,34 @@
 const path = require("path");
-// const fs = require("fs");
-const {v4: uuidv4} = require("uuid");
-const db = require("../db/db.json");
+const fs = require("fs");
+const { v4: uuidv4 } = require("uuid");
+let db = require("../db/db.json");
 const dbData = require("../data/notesData");
-
+const { writeFileSync } = require("fs");
 
 module.exports = (app) => {
+  // API Routes
+  app.get("/api/notes", (req, res) => {
+    return res.json(db);
+  });
 
-
-    // API Routes
-    app.get("/api/notes", (req, res) => {
-      return res.json(dbData.readNotes());
-    });
-
-    app.post("/api/notes", (req, res) => {
-     const newNote = req.body;
-     newNote.id = uuidv4();
-    const notes = dbData.readNotes();
+  app.post("/api/notes", (req, res) => {
+    let newNote = req.body;
+    newNote.id = uuidv4();
+    let notes = fs.writeFileSync("../db/db.json", JSON.stringify(db))
+    .then(() => {
+      res.json(notes);
+    })
+    .catch((err) => console.error(err));
+  
+    // let notes = dbData.readNotes();
     notes.push(newNote);
 
-    dbData.writeData(notes);
+    // dbData.writeNotes(notes);
 
-     return res.json(notes);
-     
-    });
+    // return res.json(notes);
+  });
 
-    // app.delete("/api/notes/:id", (req, res) => {
-  
-    // })
+  // app.delete("/api/notes/:id", (req, res) => {
 
-  
-
-    
+  // })
 };
-
