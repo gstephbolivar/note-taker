@@ -4,12 +4,16 @@ const { v4: uuidv4 } = require("uuid");
 const db = require("../db/db.json");
 const util = require("util");
 const writeFileSync = util.promisify(fs.writeFile);
-const readFileSync = fs.readFileSync;
+const readFile = fs.readFile;
 
 module.exports = (app) => {
   // API Routes
   app.get("/api/notes", (req, res) => {
-    return res.json(db);
+    readFile("./db/db.json", (error , data) => {
+      let db = JSON.parse(data);
+     if (error) throw console.log(error);
+     res.json(db);
+    });
   });
   // Route to post a new note
   app.post("/api/notes", (req, res) => {
@@ -29,8 +33,8 @@ module.exports = (app) => {
   // Route to delete a note
   app.delete("/api/notes/:id", (req, res) => {
     // Once note is deleted, it will disappear from the notes list
-   readFileSync("./db/db.json", JSON.stringify(db), (error , data) => {
-     let db = parseInt(data);
+   readFile("./db/db.json", (error , data) => {
+     let db = JSON.parse(data);
     let newNote = db.filter((note) => note.id != req.params.id);
     console.log(newNote);
     const updateNote = newNote;
