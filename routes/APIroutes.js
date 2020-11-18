@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 const db = require("../db/db.json");
 const util = require("util");
 const writeFileSync = util.promisify(fs.writeFile);
+const readFileSync = fs.readFileSync;
 
 module.exports = (app) => {
   // API Routes
@@ -27,8 +28,10 @@ module.exports = (app) => {
   });
   // Route to delete a note
   app.delete("/api/notes/:id", (req, res) => {
-    // receive query parameter containing id of note to delete
-    let newNote = db.filter(note => note.id != req.params.id);
+    // Once note is deleted, it will disappear from the notes list
+   readFileSync("./db/db.json", JSON.stringify(db), (error , data) => {
+     let db = parseInt(data);
+    let newNote = db.filter((note) => note.id != req.params.id);
     console.log(newNote);
     const updateNote = newNote;
     writeFileSync("./db/db.json", JSON.stringify(updateNote))
@@ -38,7 +41,7 @@ module.exports = (app) => {
       .catch((err) => {
         console.error(err);
       });
-    // each note needs a unique ID
-    // to delete, review all db.json file, remove note w/ id AND rewrite db.json file
+   });
+    
   });
 };
