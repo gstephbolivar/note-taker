@@ -55,6 +55,7 @@ A user can contribute by styling the webpage differently.
 
 I credit the following people and websites for assistance on this application:
 
+[NPMJS UUID Documentation](https://www.npmjs.com/package/uuid)
 
 ## Questions
 
