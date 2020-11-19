@@ -47,7 +47,7 @@ A user can contribute by styling the webpage differently.
 
 ## Test
 
-[Demo](./images/notetaker.gif)
+![Demo](./images/notetaker.gif)
 ![NoteTakerHomePage](./images/note-taker.png)
 ![NoteTakerNotePage](./images/notepage.png)
 
